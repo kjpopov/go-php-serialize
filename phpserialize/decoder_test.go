@@ -67,13 +67,14 @@ func TestDecodeArrayValue2(t *testing.T) {
 	}
 }
 
-func TestDecodeValueField(t *testing.T) {
+func TestDecodeNewLine(t *testing.T) {
    serialisedWithNewLine := `a:1:{s:5:"value";s:26:"Some value with new line
 ";}`
    decoded, _ := Decode(serialisedWithNewLine)
    decodedConverted := decoded.(map[interface{}]interface{})
 
    expected := "Some value with new line\n"
-
-   assert.Equal(t, expected, decodedConverted["value"].(string))
+   if assert.NotEmpty(t, decodedConverted["value"]) {
+	   assert.Equal(t, expected, decodedConverted["value"].(string))
+   }
 }
